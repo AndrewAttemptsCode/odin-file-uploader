@@ -1,0 +1,33 @@
+{
+  "name": "odin-file-uploader",
+  "version": "1.0.0",
+  "description": "https://www.theodinproject.com/lessons/nodejs-file-uploader",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node run server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrewAttemptsCode/odin-file-uploader.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndrewAttemptsCode/odin-file-uploader/issues"
+  },
+  "homepage": "https://github.com/AndrewAttemptsCode/odin-file-uploader#readme",
+  "dependencies": {
+    "@prisma/client": "^6.5.0",
+    "bcryptjs": "^3.0.2",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "prisma": "^6.5.0"
+  }
+}
