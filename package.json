@@ -20,6 +20,7 @@
   "homepage": "https://github.com/AndrewAttemptsCode/odin-file-uploader#readme",
   "dependencies": {
     "@prisma/client": "^6.5.0",
+    "@quixo3/prisma-session-store": "^3.1.13",
     "bcryptjs": "^3.0.2",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
