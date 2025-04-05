@@ -4,6 +4,10 @@ const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
 
 const getRegister = (req, res) => {
+  if (req.user) {
+    return res.redirect('/');
+  }
+
   res.render("registerform", { title: "Register an Account" });
 };
 
@@ -45,6 +49,10 @@ const postRegister = asyncHandler(async (req, res) => {
 });
 
 const getLogin = (req, res) => {
+  if (req.user) {
+    return res.redirect('/');
+  }
+  
   const allErrors = req.flash('error');
   const errorMessage = allErrors[allErrors.length - 1];
   res.render('loginform', { title: 'Log In', errorMessage })
