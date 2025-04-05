@@ -15,4 +15,6 @@ authRoute.post('/login', passport.authenticate('local', {
   failureFlash: true,
 }))
 
+authRoute.get('/logout', authController.logout)
+
 module.exports = authRoute;
