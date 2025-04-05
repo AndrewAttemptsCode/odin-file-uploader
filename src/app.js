@@ -4,6 +4,7 @@ const expressSession = require('express-session');
 const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
 const prisma = require('../config/prisma');
 const passport = require('../config/passport');
+const flash = require('connect-flash');
 const authRoute = require('./routes/authRoute');
 
 const app = express();
@@ -32,6 +33,7 @@ app.use(
   })
 );
 
+app.use(flash());
 app.use(passport.session());
 
 app.get('/', (req, res) => {
