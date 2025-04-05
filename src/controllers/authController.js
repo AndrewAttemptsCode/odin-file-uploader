@@ -44,4 +44,11 @@ const postRegister = asyncHandler(async (req, res) => {
 
 });
 
-module.exports = { getRegister, postRegister };
+const getLogin = (req, res) => {
+  console.log(req.session);
+  const allErrors = req.flash('error');
+  const errorMessage = allErrors[allErrors.length - 1];
+  res.render('loginform', { title: 'Log In', errorMessage })
+}
+
+module.exports = { getRegister, postRegister, getLogin };
