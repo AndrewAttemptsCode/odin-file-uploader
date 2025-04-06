@@ -6,6 +6,7 @@ const prisma = require('../config/prisma');
 const passport = require('../config/passport');
 const flash = require('connect-flash');
 const authRoute = require('./routes/authRoute');
+const indexRoute = require('./routes/indexRoute');
 
 const app = express();
 
@@ -36,11 +37,7 @@ app.use(
 app.use(flash());
 app.use(passport.session());
 
-app.get('/', (req, res) => {
-  console.log(req.session);
-  res.send('test test 123');
-})
-
+app.use('/', indexRoute);
 app.use('/auth', authRoute);
 
 app.use((err, req, res, next) => {
