@@ -6,30 +6,38 @@
   <title><%= title %></title>
 </head>
 <body>
-  <h1><%= title %></h1>
-  <form action="/auth/register" method="post">
-    <label for="username">Username:</label>
-    <input type="text" name="username" id="username" value="<%= locals.username %>">
-    <% if (locals.usernameError) { %>
-      <p><%= usernameError %></p>
-    <% } %>
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" value="<%= locals.email %>">
-    <% if (locals.emailError) { %>
-      <p><%= emailError %></p>
-    <% } %>
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password">
-    <% if (locals.passwordError) { %>
-      <p><%= passwordError %></p>
-    <% } %>
-    <label for="confirmPassword">Confirm Password:</label>
-    <input type="password" name="confirmPassword" id="confirmPassword">
-    <% if (locals.confirmPasswordError) { %>
-      <p><%= confirmPasswordError %></p>
-    <% } %>
-    <p>Already have an account? <a href="/auth/login">Log in</a></p>
-    <button type="submit">Register</button>
-  </form>
+  <header>
+    <h1>File Manager</h1>
+    <%- include('partials/navbar') %>
+  </header>
+
+  <main>
+    <h1><%= title %></h1>
+    
+    <form action="/auth/register" method="post">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" value="<%= locals.username %>">
+      <% if (locals.usernameError) { %>
+        <p><%= usernameError %></p>
+      <% } %>
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" value="<%= locals.email %>">
+      <% if (locals.emailError) { %>
+        <p><%= emailError %></p>
+      <% } %>
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password">
+      <% if (locals.passwordError) { %>
+        <p><%= passwordError %></p>
+      <% } %>
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" name="confirmPassword" id="confirmPassword">
+      <% if (locals.confirmPasswordError) { %>
+        <p><%= confirmPasswordError %></p>
+      <% } %>
+      <p>Already have an account? <a href="/auth/login">Log in</a></p>
+      <button type="submit">Register</button>
+    </form>
+  </main>
 </body>
 </html>
