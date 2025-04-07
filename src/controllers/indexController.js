@@ -1,17 +1,73 @@
+const prisma = require('../../config/prisma');
+const asyncHandler = require('express-async-handler');
+
 const getIndex = (req, res) => {
   res.render('index', { title: 'File Manager', user: req.user });
 }
 
-const getUpload = (req, res) => {
-  if (!req.user) {
+const getUpload = asyncHandler(async (req, res) => {
+  const user = req.user;
+  if (!user) {
     return res.redirect('/auth/login');
   }
-  res.render('uploadform', { title: 'Upload a file', user: req.user });
-}
+  const folders = await prisma.folder.findMany({
+    where: { userId: user.id },
+    orderBy: { name: 'asc' },
+  })
+  res.render('uploadform', { title: 'Upload a file', user, folders });
+})
 
-const postUpload = (req, res) => {
+const postUpload = asyncHandler(async (req, res) => {
+  const { folderId } = req.params;
+  const { originalname } = req.file;
+  await prisma.file.create({
+    data: {
+      name: originalname,
+      folder: {
+        connect: { id: Number(folderId) },
+      },
+    },
+  });
   console.log(req.file);
-  res.send('File upload successfully');
-}
+  res.redirect(`/folder/${folderId}`);
+})
 
-module.exports = { getIndex, getUpload, postUpload };
+const postFolder = asyncHandler(async (req, res) => {
+  const { name } = req.body;
+  const userId = req.user.id;
+  await prisma.folder.create({
+    data: {
+      name,
+      user: {
+        connect: { id: userId },
+      },
+    },
+  });
+  res.redirect('/upload');
+})
+
+const getFolder = asyncHandler(async (req, res) => {
+  const { folderId } = req.params;
+  const user = req.user;
+  const userId = req.user.id;
+
+  const folder = await prisma.folder.findUnique({
+    where: { id: Number(folderId) },
+    include: {
+      files: true,
+    },
+  });
+
+  if (userId !== folder.userId) {
+    return res.status(403).send('You do not have permission to access this folder.');
+  }
+
+  if (!folder) {
+    return res.status(404).send('Folder not found.');
+  }
+
+  console.log(folder);
+  res.render('folder-contents', { title: folder.name, files: folder.files, folderId: folder.id, user })
+})
+
+module.exports = { getIndex, getUpload, postUpload, postFolder, getFolder };

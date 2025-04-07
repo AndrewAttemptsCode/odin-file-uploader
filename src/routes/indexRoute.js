@@ -7,6 +7,8 @@ const indexRoute = Router();
 
 indexRoute.get('/', indexController.getIndex);
 indexRoute.get('/upload', indexController.getUpload);
-indexRoute.post('/upload', upload.single('fileupload'), indexController.postUpload);
+indexRoute.post('/folder/:folderId', upload.single('fileupload'), indexController.postUpload);
+indexRoute.post('/create-folder', indexController.postFolder);
+indexRoute.get('/folder/:folderId', indexController.getFolder);
 
 module.exports = indexRoute;
