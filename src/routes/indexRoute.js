@@ -12,5 +12,6 @@ indexRoute.post('/create-folder', indexController.postFolder);
 indexRoute.get('/folder/:folderId', indexController.getFolder);
 indexRoute.post('/folder/:folderId/update-folder', indexController.updateFolder);
 indexRoute.get('/folder/:folderId/delete-folder', indexController.deleteFolder);
+indexRoute.get('/folder/:folderId/:fileId', indexController.downloadFile);
 
 module.exports = indexRoute;
