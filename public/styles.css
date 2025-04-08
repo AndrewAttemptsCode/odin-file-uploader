@@ -1,0 +1,7 @@
+.rename-folder {
+  display: none;
+}
+
+.rename-folder.active {
+  display: block;
+}
