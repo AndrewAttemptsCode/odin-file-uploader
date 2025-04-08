@@ -40,13 +40,9 @@ model Folder {
 model File {
   id        Int      @id @default(autoincrement())
   name      String
+  filePath  String
+  fileSize  Int
   createdAt DateTime @default(now())
   folder    Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
   folderId  Int
 }
-
-// Add folders. 
-// Users should be able to CRUD folders 
-// and upload files in them. 
-// Set up routes and necessary database 
-// interactions for this.
