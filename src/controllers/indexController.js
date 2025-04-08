@@ -70,4 +70,24 @@ const getFolder = asyncHandler(async (req, res) => {
   res.render('folder-contents', { title: folder.name, files: folder.files, folderId: folder.id, user })
 })
 
-module.exports = { getIndex, getUpload, postUpload, postFolder, getFolder };
+const updateFolder = asyncHandler(async (req, res) => {
+  const { folderId } = req.params;
+  const { folderName } = req.body;
+  await prisma.folder.update({
+    where: { id: Number(folderId) },
+    data: {
+      name: folderName,
+    },
+  });
+  res.redirect(`/folder/${folderId}`);
+})
+
+const deleteFolder = asyncHandler(async (req, res) => {
+  const { folderId } = req.params;
+  await prisma.folder.delete({
+    where: { id: Number(folderId) },
+  });
+  res.redirect('/upload');
+})
+
+module.exports = { getIndex, getUpload, postUpload, postFolder, getFolder, updateFolder, deleteFolder };
