@@ -8,36 +8,58 @@
   <title><%= title %></title>
 </head>
 <body>
-  <header>
-    <h1>File Manager</h1>
-    <%- include('partials/navbar') %>
-  </header>
-  <main>
-    <h1><%= title %></h1>
+  <div id="app">
+    <header>
+      <h1>File Manager</h1>
+      <%- include('partials/navbar') %>
+    </header>
+    <main>
 
-    <a href="/upload">< Back</a>
+      <a class="back-button" href="/upload">< Back</a>
 
-    <button onclick="toggleEdit()">Edit</button>
+      <div class="folder-wrapper">
+        <h1><%= title %></h1>  
+        <button onclick="toggleEdit()">Edit</button>
+        <a href="/folder/<%= folderId %>/delete-folder">Delete</a>
+      </div>
 
-    <form class="rename-folder" action="/folder/<%= folderId %>/update-folder" method="post">
-      <input type="text" name="folderName" id="folderName" value="<%= locals.title %>">
-      <button type="submit">Update</button>
-    </form>
+      <form class="rename-folder" action="/folder/<%= folderId %>/update-folder" method="post">
+        <input type="text" name="folderName" id="folderName" value="<%= locals.title %>">
+        <button type="submit">Update</button>
+      </form>
 
-    <a href="/folder/<%= folderId %>/delete-folder">Delete</a>
-
-    <form action="/folder/<%= folderId %>" method="post" enctype="multipart/form-data">
-      <input type="file" name="fileupload">
-      <button type="submit">Upload</button>
-    </form>
-    
-    <% if (locals.files) { %>
-      <% files.forEach(file => { %>
-        <a href="/folder/<%= folderId %>/<%= file.id %>"><%= file.name %></a>
-        <%= file.createdAt %>
-        <%= file.fileSize %>
-      <% }) %>
-    <% } %>
-  </main>
+      <hr>
+  
+      <form class="file-select" action="/folder/<%= folderId %>" method="post" enctype="multipart/form-data">
+        <label for="fileupload" class="file-label">Choose file</label>
+        <input onchange="displayFile()" type="file" name="fileupload" id="fileupload" hidden>
+        <span class="file-name">No file chosen</span>
+        <button type="submit">Upload</button>
+      </form>
+      
+      <% if (locals.files.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>File Name</th>
+              <th>Upload Date</th>
+              <th>Upload Time</th>
+              <th>File Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% files.forEach(file => { %>
+              <tr>
+                <td><a href="/folder/<%= folderId %>/<%= file.id %>"><%= file.name %></a></td>
+                <td><%= file.dateFormatted %></td>
+                <td><%= file.timeFormatted %></td>
+                <td><%= file.fileSize %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
+    </main>
+  </div>
 </body>
 </html>
