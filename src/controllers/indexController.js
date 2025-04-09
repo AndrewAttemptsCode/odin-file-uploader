@@ -60,16 +60,31 @@ const getFolder = asyncHandler(async (req, res) => {
     },
   });
 
+  if (!folder) {
+    return res.status(404).send('Folder not found.');
+  }
+  
   if (userId !== folder.userId) {
     return res.status(403).send('You do not have permission to access this folder.');
   }
 
-  if (!folder) {
-    return res.status(404).send('Folder not found.');
-  }
+  folder.files = folder.files.map((file) => {
+    const dateTimeObj = new Date(file.createdAt);
+    const date = String(dateTimeObj.getDate()).padStart(2, '0');
+    const month = String(dateTimeObj.getMonth() + 1).padStart(2, '0');
+    const year = String(dateTimeObj.getFullYear()).slice(-2);
 
-  console.log(folder);
-  // format the date and time for display
+    const hours = String(dateTimeObj.getHours()).padStart(2, '0');
+    const minutes = String(dateTimeObj.getMinutes()).padStart(2, '0');
+    const seconds = String(dateTimeObj.getSeconds()).padStart(2, '0');
+
+    return {
+      ...file,
+      dateFormatted: `${date}/${month}/${year}`,
+      timeFormatted: `${hours}:${minutes}:${seconds}`
+    };
+  });
+
   res.render('folder-contents', { title: folder.name, files: folder.files, folderId: folder.id, user })
 })
 
