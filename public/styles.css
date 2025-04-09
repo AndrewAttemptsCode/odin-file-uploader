@@ -1,7 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+#root, #__next {
+  isolation: isolate;
+}
+
+/* Structure */
+
+#app {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background-color: #F9FAFB;
+  min-height: 100vh;
+}
+
+/* Header */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+header h1 {
+  color: #6366F1;
+}
+
+/* Nav */
+
+nav div a {
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  background-color: #3B82F6;
+  color: #F9FAFB;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Main */
+
+main {
+  padding: 0.5rem 1rem;
+}
+
+main h1 {
+  color: #6366F1;
+}
+
+.back-button {
+  text-decoration: none;
+  color: #3B82F6;
+}
+
+/* Folder Header */
+
+.folder-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.folder-wrapper button,
+.folder-wrapper a,
+.rename-folder button {
+  border: none;
+  border-radius: 10px;
+  color: #F9FAFB;
+  background-color: #3B82F6;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 4px 16px;
+  cursor: pointer;
+}
+
+/* Form Inputs */
+
+.rename-folder {
+  margin-bottom: 8px;
+}
+
+.rename-folder button {
+  border-radius: 5px;
+}
+
+.file-select {
+  margin: 16px 0;
+}
+
+.file-label,
+.file-select button {
+  border: 2px solid #6366F1;
+  border-radius: 5px;
+  background: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  color: #1F2937;
+  font-weight: 500;
+}
+
+.file-select button {
+  background-color: #6366F1;
+  color: #F9FAFB;
+  padding: 6px 16px;
+}
+
+.file-name {
+  color: #1F2937;
+}
+
+/* Folder Renaming functionality */
+
 .rename-folder {
   display: none;
 }
 
 .rename-folder.active {
   display: block;
+}
+
+/* Table */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  color: #1F2937;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #E5E7EB;
+}
+
+thead {
+  background-color: #f2f2f2;
 }
