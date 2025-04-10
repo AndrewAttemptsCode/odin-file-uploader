@@ -98,6 +98,13 @@ main h1 {
   cursor: pointer;
 }
 
+hr {
+  height: 5px;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(to right, #3B82F6, #6366F1);
+}
+
 /* Form Inputs */
 
 .rename-folder {
