@@ -23,9 +23,12 @@
         <a href="/folder/<%= folderId %>/delete-folder">Delete</a>
       </div>
 
-      <form class="rename-folder" action="/folder/<%= folderId %>/update-folder" method="post">
+      <form data-show-form="<%= locals.showEditFolder %>" class="rename-folder" action="/folder/<%= folderId %>/update-folder" method="post">
         <input type="text" name="folderName" id="folderName" value="<%= locals.title %>">
         <button type="submit">Update</button>
+        <% if (locals.editFolderNameError) { %>
+          <p><%= editFolderNameError %></p>
+        <% } %>
       </form>
 
       <hr>
