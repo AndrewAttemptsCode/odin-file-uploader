@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const indexController = require('../controllers/indexController');
 const multer  = require('multer');
+const editFolderNameValidation = require('../validators/editFolderNameValidation');
 const upload = multer({ dest: 'uploads/' });
 
 const indexRoute = Router();
@@ -10,7 +11,7 @@ indexRoute.get('/upload', indexController.getUpload);
 indexRoute.post('/folder/:folderId', upload.single('fileupload'), indexController.postUpload);
 indexRoute.post('/create-folder', indexController.postFolder);
 indexRoute.get('/folder/:folderId', indexController.getFolder);
-indexRoute.post('/folder/:folderId/update-folder', indexController.updateFolder);
+indexRoute.post('/folder/:folderId/update-folder', editFolderNameValidation, indexController.updateFolder);
 indexRoute.get('/folder/:folderId/delete-folder', indexController.deleteFolder);
 indexRoute.get('/folder/:folderId/:fileId', indexController.downloadFile);
 
