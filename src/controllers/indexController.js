@@ -20,18 +20,24 @@ const getUpload = asyncHandler(async (req, res) => {
 
 const postUpload = asyncHandler(async (req, res) => {
   const { folderId } = req.params;
-  const { originalname, path, size } = req.file;
-  await prisma.file.create({
-    data: {
-      name: originalname,
-      filePath: path,
-      fileSize: size,
-      folder: {
-        connect: { id: Number(folderId) },
+
+  if (req.file) {
+    const { originalname, path, size } = req.file;
+    await prisma.file.create({
+      data: {
+        name: originalname,
+        filePath: path,
+        fileSize: size,
+        folder: {
+          connect: { id: Number(folderId) },
+        },
       },
-    },
-  });
-  console.log(req.file);
+    });
+    console.log(req.file);
+  } else {
+    console.log('No file selected.');
+  }
+  
   res.redirect(`/folder/${folderId}`);
 })
 
