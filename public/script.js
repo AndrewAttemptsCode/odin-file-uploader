@@ -19,3 +19,12 @@ const displayFile = () => {
     fileNameDisplay.textContent = 'No file chosen';
   }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const editForm = document.querySelector('.rename-folder');
+  const showEditFolder = editForm.getAttribute('data-show-form');
+
+  if (showEditFolder === 'true') {
+    toggleEdit()
+  }
+})
