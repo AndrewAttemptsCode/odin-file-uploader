@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const prisma = require('../../config/prisma');
 const asyncHandler = require('express-async-handler');
 
@@ -91,6 +92,58 @@ const getFolder = asyncHandler(async (req, res) => {
 const updateFolder = asyncHandler(async (req, res) => {
   const { folderId } = req.params;
   const { folderName } = req.body;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const folder = await prisma.folder.findUnique({
+      where: { id: Number(folderId) },
+      include: {
+        files: true,
+      },
+    });
+
+    if (!folder) {
+      return res.status(404).send('Folder not found.');
+    }
+
+    const user = req.user;
+    const userId = user.id;
+    
+    if (userId !== folder.userId) {
+      return res.status(403).send('You do not have permission to access this folder.');
+    }
+
+    folder.files = folder.files.map((file) => {
+      const dateTimeObj = new Date(file.createdAt);
+      const date = String(dateTimeObj.getDate()).padStart(2, '0');
+      const month = String(dateTimeObj.getMonth() + 1).padStart(2, '0');
+      const year = String(dateTimeObj.getFullYear()).slice(-2);
+  
+      const hours = String(dateTimeObj.getHours()).padStart(2, '0');
+      const minutes = String(dateTimeObj.getMinutes()).padStart(2, '0');
+      const seconds = String(dateTimeObj.getSeconds()).padStart(2, '0');
+  
+      return {
+        ...file,
+        dateFormatted: `${date}/${month}/${year}`,
+        timeFormatted: `${hours}:${minutes}:${seconds}`
+      };
+    });
+
+    const allErrors = errors.array();
+    const editFolderNameError = allErrors[0]?.msg;
+    
+    return res.status(400).render('folder-contents', {
+      title: folder.name,
+      editFolderNameError,
+      files: folder.files,
+      folderId: folder.id,
+      user,
+      showEditFolder: 'true'
+    })
+  }
+
   await prisma.folder.update({
     where: { id: Number(folderId) },
     data: {
