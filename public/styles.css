@@ -44,6 +44,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  background: linear-gradient(to bottom, #E5E7EB, #F9FAFB);
 }
 
 header h1 {
