@@ -27,7 +27,7 @@
         <input type="text" name="folderName" id="folderName" value="<%= locals.title %>">
         <button type="submit">Update</button>
         <% if (locals.editFolderNameError) { %>
-          <p><%= editFolderNameError %></p>
+          <p class="error-text"><%= editFolderNameError %></p>
         <% } %>
       </form>
 
