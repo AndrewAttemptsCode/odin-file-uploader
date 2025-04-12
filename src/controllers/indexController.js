@@ -42,11 +42,37 @@ const postUpload = asyncHandler(async (req, res) => {
 })
 
 const postFolder = asyncHandler(async (req, res) => {
-  const { name } = req.body;
-  const userId = req.user.id;
+  const { folderName } = req.body;
+  const user = req.user;
+  const userId = user.id;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    
+    if (!user) {
+      return res.redirect('/auth/login');
+    }
+
+    const folders = await prisma.folder.findMany({
+      where: { userId: user.id },
+      orderBy: { name: 'asc' },
+    })
+
+    const allErrors = errors.array();
+    const folderError = allErrors[0]?.msg;
+
+    return res.render('uploadform', {
+      title: 'Upload a file',
+      user,
+      folders,
+      folderError
+    })
+  }
+
   await prisma.folder.create({
     data: {
-      name,
+      name: folderName,
       user: {
         connect: { id: userId },
       },
