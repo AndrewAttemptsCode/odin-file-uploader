@@ -3,32 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles.css">
   <title><%= title %></title>
 </head>
 <body>
-  <header>
-    <h1>File Manager</h1>
-    <%- include('partials/navbar') %>
-  </header>
+  <div id="app">
+    <header>
+      <h1>File Manager</h1>
+      <%- include('partials/navbar') %>
+    </header>
+  
+    <main>
+      
+      <a class="back-button" href="/">< Back</a>
 
-  <main>
-    
-    <form action="/create-folder" method="post">
-      <label for="folderName">Folder Name:</label>
-      <input type="text" name="folderName" id="folderName">
-      <button type="submit">Add Folder</button>
-      <% if (locals.folderError) { %>
-        <p><%= folderError %></p>
+      <form action="/create-folder" method="post" class="create-folder">
+        <input type="text" name="folderName" id="folderName" placeholder="New folder name">
+        <button type="submit">Add Folder</button>
+        <% if (locals.folderError) { %>
+          <p class="error-text"><%= folderError %></p>
+        <% } %>
+      </form>
+  
+      <% if (locals.folders) { %>
+
+        <hr>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Folder Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% folders.forEach(folder => { %>
+              <tr>
+                <td>
+                  <a href="/folder/<%= folder.id %>"><%= folder.name %></a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
       <% } %>
-    </form>
-
-    <% if (locals.folders) { %>
-      <% folders.forEach(folder => { %>
-        <a href="/folder/<%= folder.id %>"><%= folder.name %></a>
-      <% }) %>
-    <% } %>
-    
-
-  </main>
+      
+    </main>
+  </div>
+  
 </body>
 </html>
