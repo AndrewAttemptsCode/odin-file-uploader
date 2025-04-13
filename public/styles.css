@@ -89,7 +89,8 @@ main h1 {
 .folder-wrapper button,
 .folder-wrapper a,
 .rename-folder button,
-.create-folder button {
+.create-folder button,
+.login-wrapper form button {
   border: none;
   border-radius: 5px;
   color: #F9FAFB;
@@ -140,7 +141,8 @@ hr {
   color: #1F2937;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
   background-color: #F9FAFB;
   border-radius: 5px;
   border: 1px solid #3B82F6;
@@ -148,7 +150,8 @@ input[type="text"] {
   color: #1F2937;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="password"]:focus {
   outline: 2px solid #6366F1;
   background-color: #f0f1f3;
 }
@@ -156,6 +159,10 @@ input[type="text"]:focus {
 .rename-folder button {
   margin-left: 5px;
   padding: 7px 28px;
+}
+
+form label {
+  color: #1F2937;
 }
 
 /* Folder Renaming functionality */
@@ -189,4 +196,24 @@ thead {
 
 .error-text {
   color: #EF4444;
+}
+
+/* Login/Register Form Layout */
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-wrapper form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+}
+
+.login-wrapper form input {
+  margin-bottom: 10px;
 }
