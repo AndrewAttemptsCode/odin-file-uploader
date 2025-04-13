@@ -142,7 +142,8 @@ hr {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
   background-color: #F9FAFB;
   border-radius: 5px;
   border: 1px solid #3B82F6;
@@ -151,7 +152,8 @@ input[type="password"] {
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus,
+input[type="email"]:focus {
   outline: 2px solid #6366F1;
   background-color: #f0f1f3;
 }
@@ -216,4 +218,12 @@ thead {
 
 .login-wrapper form input {
   margin-bottom: 10px;
+}
+
+/* Responsive */
+
+@media (max-width: 325px) {
+  .login-wrapper h1 {
+    font-size: 28px;
+  }
 }
