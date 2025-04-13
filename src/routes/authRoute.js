@@ -10,7 +10,7 @@ authRoute.post('/register', registerValidation, authController.postRegister);
 
 authRoute.get('/login', authController.getLogin);
 authRoute.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
+  successRedirect: '/upload',
   failureRedirect: '/auth/login',
   failureFlash: true,
 }))
