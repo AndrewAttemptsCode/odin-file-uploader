@@ -7,26 +7,34 @@
   <title><%= title %></title>
 </head>
 <body>
-  <header>
-    <h1>File Manager</h1>
-    <%- include('partials/navbar') %>
-  </header>
+  <div id="app">
+    <header>
+      <h1>File Manager</h1>
+      <%- include('partials/navbar') %>
+    </header>
+  
+    <main>
 
-  <main>
-    <h1><%= title %></h1>
+      <a class="back-button" href="/">< Back</a>
 
-    <form action="/auth/login" method="post">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username">
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password">
-      <% if (errorMessage) { %>
-        <p><%= errorMessage %></p>
-      <% } %>
-      <p>Need an account? <a href="/auth/register">Register</a></p>
-      <button type="submit">Login</button>
-    </form>
-  </main>
+      <div class="login-wrapper">
+        <h1><%= title %></h1>
+  
+        <form action="/auth/login" method="post">
+          <label for="username">Username:</label>
+          <input type="text" name="username" id="username">
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password">
+          <% if (errorMessage) { %>
+            <p class="error-text"><%= errorMessage %></p>
+          <% } %>
+          <p>Need an account? <a href="/auth/register">Register</a></p>
+          <button type="submit">Login</button>
+        </form>
+      </div>
+      
+    </main>
+  </div>
 
 </body>
 </html>
