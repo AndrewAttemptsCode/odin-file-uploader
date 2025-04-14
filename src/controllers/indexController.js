@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const prisma = require('../../config/prisma');
 const asyncHandler = require('express-async-handler');
+const supabase = require('../../config/supabase');
 
 const getIndex = (req, res) => {
   res.render('index', { title: 'File Manager', user: req.user });
@@ -20,20 +21,36 @@ const getUpload = asyncHandler(async (req, res) => {
 
 const postUpload = asyncHandler(async (req, res) => {
   const { folderId } = req.params;
+  const file = req.file;
 
-  if (req.file) {
-    const { originalname, path, size } = req.file;
+  if (file) {
+      const { data, error } = await supabase
+        .storage
+        .from('uploads')
+        .upload(`user-uploads/${file.originalname}`, file.buffer, {
+          contentType: file.mimetype,
+          cacheControl: '3600',
+          upsert: false,
+        })
+    
+      if (error) {
+        console.error('Upload error:', error.message)
+      } else {
+        console.log('Uploaded:', data)
+      }
+
+    const { originalname, size } = file;
     await prisma.file.create({
       data: {
         name: originalname,
-        filePath: path,
+        filePath: data.path,
         fileSize: size,
         folder: {
           connect: { id: Number(folderId) },
         },
       },
     });
-    console.log(req.file);
+    console.log(file);
   } else {
     console.log('No file selected.');
   }
