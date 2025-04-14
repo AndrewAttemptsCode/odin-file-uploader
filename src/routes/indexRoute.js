@@ -2,7 +2,7 @@ const { Router } = require('express');
 const indexController = require('../controllers/indexController');
 const multer  = require('multer');
 const folderNameValidation = require('../validators/folderNameValidation');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage: multer.memoryStorage() });
 
 const indexRoute = Router();
 
