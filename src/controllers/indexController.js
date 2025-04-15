@@ -232,12 +232,21 @@ const downloadFile = asyncHandler(async (req, res) => {
     where: { id: Number(fileId) },
   });
 
-  res.download(file.filePath, file.name, (err) => {
-    if (err) {
-      console.error('Download error:', err);
-      res.status(500).send('File could not be downloaded.');
-    }
-  });  
+  const { data, error } = await supabase
+  .storage
+  .from('uploads')
+  .download(`${file.filePath}`)
+
+  if (error) {
+    return res.status(500).send('Could not download file.');
+  }
+
+  const arrayBuffer = await data.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+
+  res.setHeader('Content-Disposition', `attachment; filename="${file.name}"`);
+  res.setHeader('Content-Type', 'application/octet-stream');
+  res.send(buffer); 
 })
 
 module.exports = { getIndex, getUpload, postUpload, postFolder, getFolder, updateFolder, deleteFolder, downloadFile };
