@@ -22,12 +22,13 @@ const getUpload = asyncHandler(async (req, res) => {
 const postUpload = asyncHandler(async (req, res) => {
   const { folderId } = req.params;
   const file = req.file;
+  const userId = req.user.id;
 
   if (file) {
       const { data, error } = await supabase
         .storage
         .from('uploads')
-        .upload(`user-uploads/${file.originalname}`, file.buffer, {
+        .upload(`user-uploads/${file.originalname}-${userId}`, file.buffer, {
           contentType: file.mimetype,
           cacheControl: '3600',
           upsert: false,
