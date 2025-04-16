@@ -250,4 +250,33 @@ const downloadFile = asyncHandler(async (req, res) => {
   res.send(buffer); 
 })
 
-module.exports = { getIndex, getUpload, postUpload, postFolder, getFolder, updateFolder, deleteFolder, downloadFile };
+const removeFile = asyncHandler(async (req, res) => {
+  const { fileId, folderId } = req.params;
+  const userId = req.user.id;
+
+  const fileOwner = await prisma.folder.findUnique({
+    where: { id: Number(folderId) },
+  });
+
+  if (userId !== fileOwner.userId) {
+    return res.status(403).send('You do not have permission to remove this file.');
+  }
+
+  const file = await prisma.file.delete({
+    where: { id: Number(fileId) },
+  });
+
+  const { data, error } = await supabase
+  .storage
+  .from('uploads')
+  .remove([`${file.filePath}`])
+
+  if (error) {
+    console.error('Supabase deletion error:', error.message);
+    return res.status(500).send('File deleted from DB, but failed to delete from storage.');
+  }
+
+  res.redirect(`/folder/${folderId}`);
+})
+
+module.exports = { getIndex, getUpload, postUpload, postFolder, getFolder, updateFolder, deleteFolder, downloadFile, removeFile };
