@@ -14,5 +14,6 @@ indexRoute.get('/folder/:folderId', indexController.getFolder);
 indexRoute.post('/folder/:folderId/update-folder', folderNameValidation, indexController.updateFolder);
 indexRoute.get('/folder/:folderId/delete-folder', indexController.deleteFolder);
 indexRoute.get('/folder/:folderId/:fileId', indexController.downloadFile);
+indexRoute.get('/folder/:folderId/:fileId/delete-file', indexController.removeFile);
 
 module.exports = indexRoute;
